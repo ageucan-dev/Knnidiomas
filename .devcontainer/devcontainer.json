@@ -1,0 +1,12 @@
+{
+  "name": "KNN Barretos Landing Page",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "KNN Barretos",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postStartCommand": "npm start"
+}
