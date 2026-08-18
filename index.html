@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KNN Idiomas</title>
+  <meta name="description" content="KNN Idiomas Barretos" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Roboto,Arial,sans-serif;background:#fff;color:#252525}button,input{font:inherit}.page{min-height:100vh;background:#fff}.shell{width:81.6%;max-width:1260px;margin:0 auto}
+    .topbar{height:145px;background:#fff}.topbar .shell{height:100%;display:flex;align-items:flex-start;justify-content:space-between;padding-top:28px}.brand-side{display:flex;align-items:center;gap:34px}.header-brand{width:260px;height:auto;display:block}.flags{width:132px;height:auto;display:block}.contact{margin-top:0;border:0;border-radius:10px;height:53px;min-width:300px;padding:0 34px;background:linear-gradient(105deg,#5700af,#675ad0);color:#fff;display:flex;align-items:center;justify-content:center;gap:22px;font-size:17px;font-weight:700;letter-spacing:.7px;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:pointer}.contact img{width:31px;height:31px}
+    .main{min-height:calc(100vh - 145px);background:#fff}.main-grid{display:grid;grid-template-columns:2fr 1fr;gap:72px;align-items:start}.left{min-height:760px;display:flex;align-items:center}.hero{width:78%;max-width:670px;height:auto;display:block;object-fit:contain}.right{padding-top:62px}.card{width:100%;background:#fff;border-radius:11px;padding:50px 36px 34px;box-shadow:0 12px 45px rgba(55,43,90,.07)}.form-logo-wrap{text-align:center;margin-bottom:55px}.form-logo{width:130px;height:auto}.field{position:relative;margin-bottom:35px}.field input{width:100%;height:45px;border:0;border-bottom:1px solid #b9b9b9;outline:none;background:transparent;padding:12px 0 5px;color:#4b4b4b;font-size:16px}.field label{position:absolute;left:0;top:13px;color:#656565;font-size:16px;pointer-events:none;transition:.15s ease}.field input:focus+label,.field input:not(:placeholder-shown)+label{top:-8px;font-size:12px;color:#6f18a8}.field input:focus{border-bottom-color:#777}.err{display:none;color:#c62828;font-size:11px;margin-top:5px}.field.invalid .err{display:block}.field.invalid input{border-bottom-color:#c62828}.send{width:100%;height:44px;border:0;border-radius:9px;background:linear-gradient(105deg,#5700af,#675ad0);color:#fff;font-weight:700;font-size:16px;box-shadow:0 2px 5px rgba(0,0,0,.18);cursor:pointer}.send:disabled{opacity:.7;cursor:wait}.privacy{font-size:13.5px;line-height:1.4;margin:10px 0 0;color:#262626}.privacy a{color:#262626}.status{min-height:18px;margin:8px 0 0;font-size:12px}.status.ok{color:#257a4c}.status.bad{color:#c62828}
+    @media(max-width:1100px){.shell{width:88%}.main-grid{gap:36px}.contact{min-width:250px}.header-brand{width:230px}.flags{width:115px}.hero{width:88%}}
+    @media(max-width:850px){.topbar{height:auto}.topbar .shell{padding:18px 0;align-items:center}.brand-side{gap:14px}.header-brand{width:190px}.flags{display:none}.contact{min-width:52px;width:52px;height:48px;padding:0}.contact span{display:none}.main{min-height:auto}.main-grid{grid-template-columns:1fr;gap:18px}.left{min-height:0;padding-top:22px}.hero{width:100%;max-width:none}.right{padding-top:0;padding-bottom:35px}.card{padding:40px 28px 30px}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="shell">
+        <div class="brand-side">
+          <img class="header-brand" src="https://www.drive.app.br/divulgacao/knn.svg" alt="KNN Idiomas — The world is here.">
+          <img class="flags" src="https://drive.knnidiomas.com.br/img/bandeiras_idiomas_knn.2fa09f32.svg" alt="Idiomas">
+        </div>
+        <button class="contact" id="whatsapp" type="button">
+          <img src="https://www.drive.app.br/divulgacao/whatsapp.svg" alt="">
+          <span>Entre em contato</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="shell main-grid">
+        <section class="left">
+          <img class="hero" src="https://drive.app.br/landingpage_knn.png" alt="KNN Idiomas">
+        </section>
+
+        <aside class="right">
+          <div class="card">
+            <form id="leadForm" novalidate>
+              <div class="form-logo-wrap">
+                <img class="form-logo" src="https://www.drive.app.br/divulgacao/knnidiomas.svg" alt="KNN Idiomas">
+              </div>
+
+              <div class="field" data-field="nome">
+                <input id="nome" name="nome" type="text" placeholder=" " autocomplete="name">
+                <label for="nome">Nome</label>
+                <div class="err">Informe seu nome.</div>
+              </div>
+
+              <div class="field" data-field="email">
+                <input id="email" name="email" type="email" placeholder=" " autocomplete="email">
+                <label for="email">E-mail</label>
+                <div class="err">Informe um e-mail válido.</div>
+              </div>
+
+              <div class="field" data-field="telefone">
+                <input id="telefone" name="telefone" type="tel" placeholder=" " inputmode="tel" autocomplete="tel">
+                <label for="telefone">Telefone</label>
+                <div class="err">Informe um telefone válido.</div>
+              </div>
+
+              <div class="field" data-field="idade">
+                <input id="idade" name="idade" type="number" placeholder=" " inputmode="numeric" min="1" max="120">
+                <label for="idade">Idade</label>
+                <div class="err">Informe uma idade válida.</div>
+              </div>
+
+              <button class="send" id="send" type="submit">Enviar</button>
+              <p class="privacy">Ao informar os meus dados, eu concordo com a <a href="#" onclick="return false">Política de Privacidade.</a></p>
+              <p class="status" id="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const CONFIG={parceriaId:37061,statusId:1,cdaId:null,whatsapp:'17997054178'};
+    window.dataLayer=window.dataLayer||[];
+    const $=s=>document.querySelector(s);
+    const form=$('#leadForm'),phone=$('#telefone'),send=$('#send'),status=$('#status');
+
+    $('#whatsapp').addEventListener('click',()=>{
+      dataLayer.push({event:'whatsapp_click',parceria_id:CONFIG.parceriaId,unidade:'KNN Barretos'});
+      window.open('https://wa.me/55'+CONFIG.whatsapp,'_blank','noopener,noreferrer');
+    });
+
+    function formatPhone(v){
+      const d=v.replace(/\D/g,'').slice(0,11);
+      if(!d)return''; if(d.length<=2)return`(${d}`; if(d.length<=6)return`(${d.slice(0,2)}) ${d.slice(2)}`;
+      if(d.length<=10)return`(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+      return`(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+    }
+    phone.addEventListener('input',e=>e.target.value=formatPhone(e.target.value));
+
+    let started=false;
+    form.addEventListener('input',()=>{if(!started){started=true;dataLayer.push({event:'form_start',parceria_id:CONFIG.parceriaId,unidade:'KNN Barretos'})}});
+
+    function invalid(name,on){document.querySelector(`[data-field="${name}"]`).classList.toggle('invalid',on)}
+    function validate(){
+      const nome=$('#nome').value.trim(),email=$('#email').value.trim(),telefone=$('#telefone').value.trim(),idade=$('#idade').value.trim();
+      const tests={nome:!!nome,email:/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),telefone:telefone.replace(/\D/g,'').length>=10,idade:Number(idade)>0&&Number(idade)<=120};
+      Object.entries(tests).forEach(([k,v])=>invalid(k,!v));
+      return Object.values(tests).every(Boolean);
+    }
+
+    form.addEventListener('submit',async e=>{
+      e.preventDefault(); status.textContent=''; status.className='status';
+      if(!validate())return;
+      const payload={cda_id:null,email:$('#email').value.trim(),idade:$('#idade').value.trim(),nome:$('#nome').value.trim(),parceria_id:37061,status_id:1,telefone:$('#telefone').value.trim()};
+      send.disabled=true;send.textContent='Enviando...';
+      try{
+        const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json;charset=UTF-8'},body:JSON.stringify(payload)});
+        const raw=await r.text();let result=raw;try{result=JSON.parse(raw)}catch(_){}
+        if(!r.ok||result!==true)throw new Error('Falha no cadastro');
+        dataLayer.push({event:'lead',parceria_id:37061,unidade:'KNN Barretos'});
+        status.textContent='Dados enviados com sucesso.';status.className='status ok';form.reset();started=false;
+      }catch(err){
+        console.error(err);dataLayer.push({event:'lead_error',parceria_id:37061,unidade:'KNN Barretos'});
+        status.textContent='Não foi possível enviar agora. Tente novamente ou entre em contato pelo WhatsApp.';status.className='status bad';
+      }finally{send.disabled=false;send.textContent='Enviar'}
+    });
+  </script>
+</body>
+</html>
