@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Mantém o endpoint usado pelo front-end e encaminha para o proxy PHP na Hostinger.
+RewriteRule ^api/lead/?$ api/lead.php [L,QSA]
