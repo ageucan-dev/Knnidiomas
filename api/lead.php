@@ -67,6 +67,7 @@ if ($responseBody === false) {
 
 $decodedDrive = json_decode($responseBody, true);
 $driveSuccess = $httpCode >= 200 && $httpCode < 300 && ($decodedDrive === true || trim($responseBody) === 'true');
+$metaDebug = 'not_attempted';
 
 // A Meta só recebe o evento Lead quando o DRIVE confirma o cadastro.
 if ($driveSuccess) {
@@ -96,11 +97,20 @@ if ($driveSuccess) {
             ]
         );
 
-        if (!($metaResult['ok'] ?? false) && !($metaResult['skipped'] ?? false)) {
+        if ($metaResult['ok'] ?? false) {
+            $metaDebug = 'ok';
+        } elseif ($metaResult['skipped'] ?? false) {
+            $metaDebug = 'skipped_config';
+        } else {
+            $metaDebug = 'error_' . (string)($metaResult['status'] ?? 'unknown');
             error_log('[KNN Meta CAPI] Lead não enviado: ' . json_encode($metaResult, JSON_UNESCAPED_UNICODE));
         }
+    } else {
+        $metaDebug = 'missing_event_id';
     }
 }
+
+header('X-Meta-CAPI: ' . $metaDebug);
 
 // Mantém exatamente a resposta do DRIVE para não quebrar o front-end.
 http_response_code($httpCode ?: 502);
