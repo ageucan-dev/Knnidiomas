@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'pixel_id' => '1385672982045076',
+    'pixel_id' => '510771967988010',
     'api_version' => 'v26.0',
 
     // Cole o token gerado no Gerenciador de Eventos da Meta SOMENTE no servidor.
