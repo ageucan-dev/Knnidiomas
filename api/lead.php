@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 header('Content-Type: application/json; charset=UTF-8');
 header('Cache-Control: no-store');
 
@@ -49,7 +52,7 @@ curl_setopt_array($ch, [
 ]);
 
 $responseBody = curl_exec($ch);
-$httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $curlError = curl_error($ch);
 curl_close($ch);
 
@@ -62,5 +65,43 @@ if ($responseBody === false) {
     exit;
 }
 
+$decodedDrive = json_decode($responseBody, true);
+$driveSuccess = $httpCode >= 200 && $httpCode < 300 && ($decodedDrive === true || trim($responseBody) === 'true');
+
+// A Meta só recebe o evento Lead quando o DRIVE confirma o cadastro.
+if ($driveSuccess) {
+    $eventId = trim((string)($input['event_id'] ?? ''));
+    $sourceUrl = trim((string)($input['event_source_url'] ?? ''));
+
+    if ($eventId !== '' && $sourceUrl !== '') {
+        require_once __DIR__ . '/meta-capi.php';
+
+        $metaResult = meta_send_event(
+            'Lead',
+            $eventId,
+            $sourceUrl,
+            [
+                'email' => $payload['email'],
+                'telefone' => $payload['telefone'],
+                'nome' => $payload['nome'],
+            ],
+            [
+                'fbp' => (string)($input['fbp'] ?? ''),
+                'fbc' => (string)($input['fbc'] ?? ''),
+            ],
+            [
+                'content_name' => 'Formulario KNN Barretos',
+                'content_category' => 'Lead',
+                'lead_type' => 'formulario',
+            ]
+        );
+
+        if (!($metaResult['ok'] ?? false) && !($metaResult['skipped'] ?? false)) {
+            error_log('[KNN Meta CAPI] Lead não enviado: ' . json_encode($metaResult, JSON_UNESCAPED_UNICODE));
+        }
+    }
+}
+
+// Mantém exatamente a resposta do DRIVE para não quebrar o front-end.
 http_response_code($httpCode ?: 502);
 echo $responseBody;
