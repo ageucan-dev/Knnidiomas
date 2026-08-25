@@ -90,7 +90,7 @@ function meta_send_event(
 ): array {
     $config = meta_config();
 
-    $pixelId = trim((string)($config['pixel_id'] ?? '1385672982045076'));
+    $pixelId = trim((string)($config['pixel_id'] ?? '510771967988010'));
     $token = trim((string)($config['access_token'] ?? ''));
     $apiVersion = trim((string)($config['api_version'] ?? 'v26.0'));
     $testEventCode = trim((string)($config['test_event_code'] ?? ''));
